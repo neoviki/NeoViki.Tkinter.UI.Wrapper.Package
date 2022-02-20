@@ -1,6 +1,6 @@
 #!/bin/bash
-chmod +x ./examples/button_1/run.sh
-cp ./examples/button_1/run.sh run.sh
+chmod +x ./examples/0001_filemanager/run.sh
+cp ./examples/0001_filemanager/run.sh run.sh
 for d in examples/* ; do
     echo "copy run.sh $d/run.sh"
     cp run.sh $d/run.sh

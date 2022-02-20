@@ -20,7 +20,7 @@ from platform import system as platform
 
 class UI_COMMON:
     def __init__(self):
-        self.object = None
+        self.handle = None
         self.var_title="demo"
         self.var_bg_color='#555'
         self.var_fg_color="black"
@@ -34,49 +34,49 @@ class UI_COMMON:
     def dimension(self, w, h):
         self.var_width=w
         self.var_height=h
-        self.object.configure(width=self.var_width)
-        self.object.configure(height=self.var_height)
+        self.handle.configure(width=self.var_width)
+        self.handle.configure(height=self.var_height)
 
     def bg(self, bg_color):
         self.var_bg_color = bg_color
-        self.object.configure(bg=self.var_bg_color)
+        self.handle.configure(bg=self.var_bg_color)
 
     def fg(self, fg_color):
         self.var_fg_color = fg_color
-        self.object.configure(fg=self.var_fg_color)
+        self.handle.configure(fg=self.var_fg_color)
 
     def gotoxy(self, x, y):
-        self.object.place(x=x, y=y)
+        self.handle.place(x=x, y=y)
 
     def callback(self, func):
-        self.object.configure(command = func)
+        self.handle.configure(command = func)
 
     def font(self, var_font_type):
         self.var_font_type = var_font_type
-        self.object.config(font=(self.var_font_type, self.var_font_size))
+        self.handle.config(font=(self.var_font_type, self.var_font_size))
 
     def font_size(self, var_font_size):
         self.var_font_size = var_font_size
-        self.object.config(font=(self.var_font_type, self.var_font_size))
+        self.handle.config(font=(self.var_font_type, self.var_font_size))
 
     def disable(self):
-        self.object.configure(state='disabled')
+        self.handle.configure(state='disabled')
 
     def enable(self):
-        self.object.configure(state='normal')
+        self.handle.configure(state='normal')
 
     def write(self, val):
-        self.object.configure(text=val)
+        self.handle.configure(text=val)
 
     def read(self):
-        #return self.object.get('1.0', tk.END)
-        return self.object.get()
+        #return self.handle.get('1.0', tk.END)
+        return self.handle.get()
 
 
 class ROOT(UI_COMMON):
     def __init__(self):
         UI_COMMON.__init__(self)
-        self.object = tk.Tk()
+        self.handle = tk.Tk()
         self.bg(self.var_bg_color)
         self.title(self.var_title)
         self.dimension(self.var_width, self.var_height)
@@ -86,140 +86,140 @@ class ROOT(UI_COMMON):
         self.var_width = str(w)
         self.var_height = str(h)
         self.var_dimension = '' + str(self.var_width) + 'x' + str(self.var_height) + ''
-        self.object.geometry(self.var_dimension)
-        w = self.object.winfo_reqwidth()
-        h = self.object.winfo_reqheight()
-        px=int(self.object.winfo_screenwidth()/3 - w/2)
-        py=int(self.object.winfo_screenheight()/3 - h/2)
-        self.object.geometry('+{}+{}'.format(px, py))
+        self.handle.geometry(self.var_dimension)
+        w = self.handle.winfo_reqwidth()
+        h = self.handle.winfo_reqheight()
+        px=int(self.handle.winfo_screenwidth()/3 - w/2)
+        py=int(self.handle.winfo_screenheight()/3 - h/2)
+        self.handle.geometry('+{}+{}'.format(px, py))
 
     def disable_resize(self):
-        self.object.resizable(False, False)
+        self.handle.resizable(False, False)
 
     def enable_resize(self):
-        self.object.resizable(True, True)
+        self.handle.resizable(True, True)
 
     def bg(self, bg_color):
         self.var_bg_color = bg_color
-        self.object.configure(bg=self.var_bg_color)
+        self.handle.configure(bg=self.var_bg_color)
 
     def title(self, title_string):
         self.var_title = title_string
-        self.object.winfo_toplevel().title(self.var_title)
+        self.handle.winfo_toplevel().title(self.var_title)
 
     def gotoxy(self, x, y):
-        self.object.geometry('+{}+{}'.format(x, y))
+        self.handle.geometry('+{}+{}'.format(x, y))
 
 
 class button(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_width=20
         self.var_height=5
         self.pixelVirtual = tk.PhotoImage(width=1, height=1)
-        self.object = tk.Button(master=self.root_handle,
+        self.handle = tk.Button(master=self.parent.handle,
                                 image=self.pixelVirtual,
                                 compound="c")
         self.bg(self.var_bg_color)
         self.dimension(self.var_width, self.var_height)
         self.font(self.var_font_type)
         self.font_size(self.var_font_size)
-        self.object.pack()
+        self.handle.pack()
 
     def dimension(self, w, h):
         self.var_width=w
         self.var_height=h
-        self.object.configure(width=self.var_width)
-        self.object.configure(height=self.var_height)
+        self.handle.configure(width=self.var_width)
+        self.handle.configure(height=self.var_height)
 
     def bg(self, bg_color):
         self.var_bg_color = bg_color
-        self.object.configure(bg=self.var_bg_color)
+        self.handle.configure(bg=self.var_bg_color)
 
 class input(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_width=10
         self.var_height=1
-        self.object = tk.Entry(self.root_handle)
+        self.handle = tk.Entry(self.parent.handle)
         self.bg(self.var_bg_color)
         self.dimension(self.var_width, self.var_height)
         self.font(self.var_font_type)
         self.font_size(self.var_font_size)
-        self.object.pack()
+        self.handle.pack()
 
     def dimension(self, w, h):
         self.var_width=w
         self.var_height=h
-        self.object.configure(width=self.var_width)
-        #self.object.configure(height=self.var_height)
+        self.handle.configure(width=self.var_width)
+        #self.handle.configure(height=self.var_height)
 
     def bg(self, bg_color):
         self.var_bg_color = bg_color
-        self.object.configure(bg=self.var_bg_color)
+        self.handle.configure(bg=self.var_bg_color)
 
     def write(self, val):
-        self.object.insert(tk.END, val)
+        self.handle.insert(tk.END, val)
 
 
 class display_area(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_width=10
         self.var_height=10
-        self.object = tk.scrolledtext.ScrolledText(master=self.root_handle,
+        self.handle = tk.scrolledtext.ScrolledText(master=self.parent.handle,
                                                    cursor="arrow",
                                                    undo=True)
         self.bg(self.var_bg_color)
         self.dimension(self.var_width, self.var_height)
         self.font(self.var_font_type)
         self.font_size(self.var_font_size)
-        self.object.pack()
+        self.handle.pack()
 
     def enable_text_wrap(self):
-        self.object.config(wrap=tk.WORD)
+        self.handle.config(wrap=tk.WORD)
 
     def write(self, val):
-        self.object.insert(tk.END, val)
+        self.handle.insert(tk.END, val)
 
     def read(self):
-        return self.object.get('1.0', tk.END)
+        return self.handle.get('1.0', tk.END)
 
 class label(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_width=10
         self.var_height=1
-        self.object = tk.Label(master=self.root_handle, anchor="center", justify='center')
+        self.handle = tk.Label(master=self.parent.handle, anchor="center", justify='center')
         self.bg(self.var_bg_color)
         self.dimension(self.var_width, self.var_height)
         self.font(self.var_font_type)
         self.font_size(self.var_font_size)
-        self.object.pack()
+        self.handle.pack()
 
     def write(self, val):
-        self.object.config(text=val)
+        self.handle.config(text=val)
 
 class logo(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
         self.var_bg_color='white'
-        self.root_handle=root.object
+        self.parent=parent
         self.var_path = None
         self.image=None
         self.var_width=10
         self.var_height=10
-        self.object = tk.Label(self.root_handle)
+        self.handle = tk.Label(self.parent.handle)
         self.bg(self.var_bg_color)
         self.dimension(self.var_width, self.var_height)
-        self.object.pack(expand=tk.YES, fill=tk.BOTH)
+        self.handle.pack(expand=tk.YES, fill=tk.BOTH)
 
     def write(self, val):
-        self.object.config(text=val)
+        self.handle.config(text=val)
 
     def import_image(self):
         _image = Image.open(self.var_path)
@@ -237,51 +237,51 @@ class logo(UI_COMMON):
     def path(self, var_path):
         self.var_path=var_path
         self.import_image()
-        self.object.config(image=self.image)
-        #self.object.create_image(self.var_width, self.var_height, image=self.image, anchor=tk.NW)
+        self.handle.config(image=self.image)
+        #self.handle.create_image(self.var_width, self.var_height, image=self.image, anchor=tk.NW)
 
 
 class progress_bar(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_speed=10
         self.var_width=40
         self.var_height=1
-        self.object = ttk.Progressbar(master=self.root_handle, mode ='indeterminate')
+        self.handle = ttk.Progressbar(master=self.parent.handle, mode ='indeterminate')
         self.dimension(self.var_width, self.var_height)
         self.horizantal()
-        self.object.pack()
+        self.handle.pack()
 
     def speed(self, val):
         self.var_speed = val
 
     def write(self, val):
-        self.object.config(text=val)
+        self.handle.config(text=val)
 
     def horizantal(self):
-        self.object.config(orient=tk.HORIZONTAL)
+        self.handle.config(orient=tk.HORIZONTAL)
 
     def vertical(self):
-        self.object.config(orient=tk.VERTICAL)
+        self.handle.config(orient=tk.VERTICAL)
 
     def dimension(self, w, h):
         self.var_width=w
         self.var_height=h
-        self.object.configure(length=self.var_width)
+        self.handle.configure(length=self.var_width)
         s = ttk.Style()
         s.theme_use("default")
         s.configure("TProgressbar", thickness=self.var_height)
-        self.object.configure(style="TProgressbar")
+        self.handle.configure(style="TProgressbar")
 
     def update(self, val):
-        self.object['value'] = val
+        self.handle['value'] = val
 
     def start(self):
-        self.object.start(self.var_speed)
+        self.handle.start(self.var_speed)
 
     def stop(self):
-        self.object.stop()
+        self.handle.stop()
 
 class text:
     def __init__(self, parent):
@@ -304,7 +304,7 @@ class text:
         self.var_fg_color = fg_color
 
     def bg(self, bg_color):
-        print "warning: text background cannot be set, set bg color in the canvas object"
+        print "warning: text background cannot be set, set bg color in the canvas handle"
 
     def font(self, var_font):
         self.var_font = var_font
@@ -337,33 +337,33 @@ class text:
     def gotoxy(self, x, y):
         self.x=x
         self.y=y
-        self.parent.object.create_text(self.x, self.y,fill=self.var_fg_color,font=self.var_font_attribute, text=self.value)
+        self.parent.handle.create_text(self.x, self.y,fill=self.var_fg_color,font=self.var_font_attribute, text=self.value)
 
 
 class canvas(UI_COMMON):
-    def __init__(self, root):
+    def __init__(self, parent):
         UI_COMMON.__init__(self)
-        self.root_handle=root.object
+        self.parent=parent
         self.var_width=10
         self.var_height=10
-        self.object = tk.Canvas(master=self.root_handle)
+        self.handle = tk.Canvas(master=self.parent.handle)
         self.dimension(self.var_width, self.var_height)
         self.bg(self.var_bg_color)
         #self.fg(self.var_fg_color)
-        self.object.pack()
+        self.handle.pack()
 
 def BEGIN():
     root = ROOT()
     return root
 
 def END(root):
-    root.object.attributes('-topmost',True)
-    root.object.focus_set()
+    root.handle.attributes('-topmost',True)
+    root.handle.focus_set()
 
     # Bring App to Front
     if platform() == 'Darwin':  # MacOS
         system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
-    root.object.lift()
-    root.object.mainloop()
+    root.handle.lift()
+    root.handle.mainloop()
 
