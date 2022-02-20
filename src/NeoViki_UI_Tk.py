@@ -15,7 +15,8 @@ except ImportError:
     import threading
 
 from PIL import ImageTk, Image
-
+from os import system
+from platform import system as platform
 
 class UI_COMMON:
     def __init__(self):
@@ -282,10 +283,87 @@ class progress_bar(UI_COMMON):
     def stop(self):
         self.object.stop()
 
+class text:
+    def __init__(self, parent):
+        self.parent = parent
+        self.var_fg_color = 'black'
+        self.var_font = "Times"
+        self.var_size = 20
+        self.var_bold = True
+        self.var_italic = True
+        self.var_font_attribute = ""
+        self.__generate_font_attribute()
+        self.value = ""
+        self.x = 0
+        self.y = 0
+
+    def display(self, value):
+        self.value = value
+
+    def fg(self, fg_color):
+        self.var_fg_color = fg_color
+
+    def bg(self, bg_color):
+        print "warning: text background cannot be set, set bg color in the canvas object"
+
+    def font(self, var_font):
+        self.var_font = var_font
+
+    def size(self, var_size):
+        self.var_size = var_size
+
+    def bold(self, flag):
+        if flag == True:
+            self.var_bold =  "bold"
+        else:
+            self.var_bold = ""
+
+    def italic(self, flag):
+        if flag == True:
+            self.var_italic =  "italic"
+        else:
+            self.var_italic = ""
+
+    #private method
+    def __generate_font_attribute(self):
+        self.var_font_attribute = str(self.var_font) + " " + str(self.var_size)
+
+        if self.var_italic == True:
+            self.var_font_attribute = self.var_font_attribute + " " + "italic"
+
+        if self.var_bold == True:
+            self.var_font_attribute = self.var_font_attribute + " " + "bold"
+
+    def gotoxy(self, x, y):
+        self.x=x
+        self.y=y
+        self.parent.object.create_text(self.x, self.y,fill=self.var_fg_color,font=self.var_font_attribute, text=self.value)
+
+
+class canvas(UI_COMMON):
+    def __init__(self, root):
+        UI_COMMON.__init__(self)
+        self.root_handle=root.object
+        self.var_width=10
+        self.var_height=10
+        self.object = tk.Canvas(master=self.root_handle)
+        self.dimension(self.var_width, self.var_height)
+        self.bg(self.var_bg_color)
+        #self.fg(self.var_fg_color)
+        self.object.pack()
+
 def BEGIN():
     root = ROOT()
     return root
 
 def END(root):
+    root.object.attributes('-topmost',True)
+    root.object.focus_set()
+
+    # Bring App to Front
+    if platform() == 'Darwin':  # MacOS
+        system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
+
+    root.object.lift()
     root.object.mainloop()
 
