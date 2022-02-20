@@ -38,6 +38,6 @@
 
 #### Canvas ( examples/0008_canvas )
 
-![] (examples/0008_canvas/demo.png )
+![](examples/0008_canvas/demo.png )
 
 
