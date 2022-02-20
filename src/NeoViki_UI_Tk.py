@@ -45,9 +45,6 @@ class UI_COMMON:
         self.var_fg_color = fg_color
         self.handle.configure(fg=self.var_fg_color)
 
-    def gotoxy(self, x, y):
-        self.handle.place(x=x, y=y)
-
     def callback(self, func):
         self.handle.configure(command = func)
 
@@ -72,6 +69,8 @@ class UI_COMMON:
         #return self.handle.get('1.0', tk.END)
         return self.handle.get()
 
+    def gotoxy(self, x, y):
+        self.handle.place(x=x, y=y)
 
 class ROOT(UI_COMMON):
     def __init__(self):
@@ -137,6 +136,7 @@ class button(UI_COMMON):
         self.var_bg_color = bg_color
         self.handle.configure(bg=self.var_bg_color)
 
+
 class input(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
@@ -162,7 +162,6 @@ class input(UI_COMMON):
 
     def write(self, val):
         self.handle.insert(tk.END, val)
-
 
 class display_area(UI_COMMON):
     def __init__(self, parent):
@@ -204,6 +203,7 @@ class label(UI_COMMON):
     def write(self, val):
         self.handle.config(text=val)
 
+
 class logo(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
@@ -239,7 +239,6 @@ class logo(UI_COMMON):
         self.import_image()
         self.handle.config(image=self.image)
         #self.handle.create_image(self.var_width, self.var_height, image=self.image, anchor=tk.NW)
-
 
 class progress_bar(UI_COMMON):
     def __init__(self, parent):
@@ -337,8 +336,7 @@ class text:
     def gotoxy(self, x, y):
         self.x=x
         self.y=y
-        self.parent.handle.create_text(self.x, self.y,fill=self.var_fg_color,font=self.var_font_attribute, text=self.value)
-
+        self.handle = self.parent.handle.create_text(self.x, self.y, fill=self.var_fg_color, font=self.var_font_attribute, text=self.value)
 
 class canvas(UI_COMMON):
     def __init__(self, parent):
