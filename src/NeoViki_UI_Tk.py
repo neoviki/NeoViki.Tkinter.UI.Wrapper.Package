@@ -271,6 +271,56 @@ class progress_bar(UI_COMMON):
 
         self.handle.place(x=self.x, y=self.y)
 
+class box:
+    def __init__(self, parent):
+        self.parent = parent
+        self.border = border()
+        self.color = color()
+        self.width = 10
+        self.height = 10
+
+    def gotoxy(self, x, y):
+        self.x = x
+        self.y = y
+        w_mid = self.width/2
+        h_mid = self.height/2
+
+        self.handle = self.parent.handle.create_rectangle(self.x - self.width, self.y - self.height,
+                                                          self.x + self.width, self.y + self.height,
+                                                          width=self.border.thickness,
+                                                          outline=self.border.color,
+                                                          fill=self.color.fg )
+
+'''
+class line:
+    def __init__(self, parent):
+        self.parent = parent
+        self.color = color()
+        self.x1 = 1
+        self.x2 = 1
+        self.y1 = 2
+        self.y2 = 2
+        self.thickness = 2
+        self.dashed = False
+
+    def gotoxy(self, x1, y1, x2, y2):
+        self.x1 = x1
+        self.x2 = x2
+        self.y1 = y1
+        self.y2 = y2
+
+        if self.dashed == False:
+            self.handle = self.parent.handle.create_line( self.x1, self.y1,
+                        self.x2, self.y2,
+                        width=self.thickness,
+                        fill=self.color.fg)
+        else:
+            self.handle = self.parent.handle.create_line( self.x1, self.y1,
+                        self.x2, self.y2,
+                        width=self.thickness,
+                        fill=self.color.fg, dash=(4,4))
+'''
+
 class circle:
     def __init__(self, parent):
         self.parent = parent
