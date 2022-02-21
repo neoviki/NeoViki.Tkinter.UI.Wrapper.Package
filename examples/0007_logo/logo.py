@@ -20,13 +20,13 @@ ui_exit=False
 def open_folder():
     global root
     rep = filedialog.askdirectory(
-        parent=root.object,
+        parent=root.handle,
         initialdir=os.getcwd())
     print(rep)
 
 def open_file():
     global root
-    rep = filedialog.askopenfilenames(parent=root.object, initialdir=os.getcwd(), filetypes=FILE_TYPES)
+    rep = filedialog.askopenfilenames(parent=root.handle, initialdir=os.getcwd(), filetypes=FILE_TYPES)
     print(rep[0])
 
 def callback_func_threaded():
@@ -45,13 +45,14 @@ def callback_func():
 def main():
     global obj_progress, ui_exit
     root = BEGIN()
-    root.title("demo")
+    root.title = "demo"
     root.dimension(500,500)
-    root.bg('#555')
+    root.bg = 'green'
     root.gotoxy(200,100)
+
     i = logo(root)
     i.dimension(200, 50)
-    i.path('logo_200x50.png')
+    i.path = 'logo_200x50.png'
     i.gotoxy(20,10)
     #obj.update(1)
     #bj.vertical()

@@ -9,18 +9,20 @@ def button_callback():
 
 
 root = BEGIN()
-root.title("demo")
-root.dimension(500,500)
+root.title = "demo"
+root.width = 500
+root.height = 500
 #root.bg('#555')
 root.gotoxy(200,100)
 
 obj = input(root)
-obj.dimension(30, 1)
-obj.gotoxy(120, 100)
-obj.font_size(12)
-obj.bg('black')
-obj.fg("white")
+obj.width = 30
+obj.height =  1
+obj.font.size = 12
+obj.color.bg = 'black'
+obj.color.fg = "white"
 obj.write("Input Box")
+obj.gotoxy(120, 100)
 #obj.disable()
 #obj.enable()
 

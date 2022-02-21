@@ -43,20 +43,21 @@ def callback_func():
 def main():
     global obj_progress, ui_exit
     root = BEGIN()
-    root.title("demo")
+    root.title = "demo"
     root.dimension(500,300)
-    #root.bg('#555')
+    #root.color.bg = '#555'
     root.gotoxy(200,100)
+
     obj_progress = progress_bar(root)
     obj_progress.dimension(200,10)
-    obj_progress.speed(1)
+    obj_progress.speed = 1
     obj_progress.gotoxy(100,100)
 
     b = button(root)
     b.dimension(20,10)
-    b.gotoxy(100, 40)
     b.write("start")
     b.callback(callback_func_threaded)
+    b.gotoxy(100, 40)
 
     #obj.update(1)
     #bj.vertical()
