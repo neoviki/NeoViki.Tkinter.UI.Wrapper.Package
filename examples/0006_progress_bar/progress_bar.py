@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../../src')
 
-from NeoViki_UI_Tk import *
+from NeoViki_UI_Python import *
 from tkinter import filedialog
 import time
 import threading

@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../../src')
-from NeoViki_UI_Tk import *
+from NeoViki_UI_Python import *
 
 root = BEGIN()
 root.title = "demo"
