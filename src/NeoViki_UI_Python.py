@@ -1,3 +1,9 @@
+'''
+    Python UI Library based on Tkinter ( NeoViki_UI Format )
+
+    Author: Viki (a) Vignesh Natarajan
+'''
+
 try:
     import os
     import tkinter as tk
