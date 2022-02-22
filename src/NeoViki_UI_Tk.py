@@ -80,14 +80,14 @@ class WINDOW(UI_COMMON):
     def __init__(self):
         UI_COMMON.__init__(self)
         self.resize = False
-        self.handle = tk.Tk()
         self.title = ""
+        self.handle = tk.Tk()
         self.width = self.handle.winfo_reqwidth()
         self.height = self.handle.winfo_reqheight()
-        self.x=int(self.handle.winfo_screenwidth()/3 - self.width/2)
-        self.y=int(self.handle.winfo_screenheight()/3 - self.height/2)
 
     def gotoxy(self, x, y):
+        #self.x=int(self.handle.winfo_screenwidth()/3 - self.width/2)
+        #self.y=int(self.handle.winfo_screenheight()/3 - self.height/2)
         self.x = x
         self.y = y
         self.handle.winfo_toplevel().title(self.title)
@@ -103,17 +103,17 @@ class button(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
         self.parent=parent
-        self.width=20
-        self.height=5
         self.pixelVirtual = tk.PhotoImage(width=1, height=1)
         self.handle = tk.Button(master=self.parent.handle,
                                 image=self.pixelVirtual,
                                 compound="c")
         self.handle.pack()
 
+
     def gotoxy(self, x, y):
         self.x = x
         self.y = y
+
         self.handle.configure(bg=self.color.bg)
         self.handle.configure(fg=self.color.fg)
         self.handle.configure(width=self.width)
