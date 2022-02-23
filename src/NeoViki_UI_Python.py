@@ -36,6 +36,12 @@ class color:
         self.fg = 'black'
         self.bg = 'white'
 
+    def complement(self, color):
+        color_hex = int(color[1:], 16)
+        comp_color = 0xFFFFFF ^ color_hex
+        comp_color = "#%06X" % comp_color
+        return comp_color
+
 class border:
     def __init__(self):
         self.color = 'black'
@@ -50,6 +56,8 @@ class UI_COMMON:
         self.font = font()
         self.width=200
         self.height=200
+        self.font_attribute = ""
+        self.generate_font_attribute()
 
     def callback(self, func):
         self.handle.configure(command = func)
@@ -70,6 +78,31 @@ class UI_COMMON:
     def read(self):
         #return self.handle.get('1.0', tk.END)
         return self.handle.get()
+
+    def delete(self, object):
+        if object.handle != None:
+            try:
+                self.handle.delete(object.handle)
+                object.handle = None
+            except:
+                print "error: object delete, try destroy instead"
+
+    def destroy(self):
+        if self.handle != None:
+            try:
+                self.handle.destroy()
+                self.handle = None
+            except:
+                print "error: object destroy"
+
+    def generate_font_attribute(self):
+        self.font_attribute = str(self.font.name) + " " + str(self.font.size)
+
+        if self.font.italic == True:
+            self.font_attribute = self.font_attribute + " " + "italic"
+
+        if self.font.bold == True:
+            self.font_attribute = self.font_attribute + " " + "bold"
 
     def gotoxy(self, x, y):
         self.x = x
@@ -182,7 +215,7 @@ class label(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
         self.parent=parent
-        self.color.bg = None
+        self.color.bg=None
         self.handle = tk.Label(master=self.parent.handle, anchor="center", justify='center')
         self.handle.pack()
 
@@ -192,11 +225,17 @@ class label(UI_COMMON):
     def gotoxy(self, x, y):
         self.x = x
         self.y = y
-        self.handle.configure(bg=self.color.bg)
+
+        self.generate_font_attribute()
+
+        if self.color.bg != None:
+            self.handle.configure(bg=self.color.bg)
+
         self.handle.configure(fg=self.color.fg)
         self.handle.configure(width=self.width)
         self.handle.configure(height=self.height)
-        self.handle.config(font=(self.font.name, self.font.size))
+        #self.handle.config(font=(self.font.name, self.font.size))
+        self.handle.config(font=self.font_attribute)
         self.handle.place(x=self.x, y=self.y)
 
 
@@ -292,8 +331,8 @@ class box:
         w_mid = self.width/2
         h_mid = self.height/2
 
-        self.handle = self.parent.handle.create_rectangle(self.x - self.width, self.y - self.height,
-                                                          self.x + self.width, self.y + self.height,
+        self.handle = self.parent.handle.create_rectangle(self.x - w_mid, self.y - h_mid,
+                                                          self.x + w_mid, self.y + h_mid,
                                                           width=self.border.thickness,
                                                           outline=self.border.color,
                                                           fill=self.color.fg )
@@ -349,29 +388,26 @@ class text:
         self.parent = parent
         self.font = font()
         self.color = color()
-        self.__font_attribute = ""
-        self.__generate_font_attribute()
         self.value = ""
 
     def write(self, value):
         self.value = value
 
-    #private method
-    def __generate_font_attribute(self):
-        self.__font_attribute = str(self.font.name) + " " + str(self.font.size)
+    def generate_font_attribute(self):
+        self.font_attribute = str(self.font.name) + " " + str(self.font.size)
 
         if self.font.italic == True:
-            self.__font_attribute = self.__font_attribute + " " + "italic"
+            self.font_attribute = self.font_attribute + " " + "italic"
 
         if self.font.bold == True:
-            self.__font_attribute = self.__font_attribute + " " + "bold"
+            self.font_attribute = self.font_attribute + " " + "bold"
 
     def gotoxy(self, x, y):
         self.x=x
         self.y=y
-        self.__generate_font_attribute()
+        self.generate_font_attribute()
         self.handle = self.parent.handle.create_text(self.x, self.y,
-                fill=self.color.fg, font=self.__font_attribute,
+                fill=self.color.fg, font=self.font_attribute,
                 text=self.value)
 
 class canvas(UI_COMMON):
@@ -384,6 +420,11 @@ class canvas(UI_COMMON):
     def gotoxy(self, x, y):
         self.x = x
         self.y = y
+
+        if self.handle == None:
+            print "canvas handle is null"
+            return
+
         self.handle.configure(bg=self.color.bg)
         self.handle.configure(width=self.width)
         self.handle.configure(height=self.height)
