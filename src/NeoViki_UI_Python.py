@@ -182,6 +182,7 @@ class label(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
         self.parent=parent
+        self.color.bg = None
         self.handle = tk.Label(master=self.parent.handle, anchor="center", justify='center')
         self.handle.pack()
 
