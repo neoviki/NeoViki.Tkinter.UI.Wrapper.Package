@@ -37,6 +37,9 @@ class color:
         self.bg = 'white'
 
     def complement(self, color):
+        if color[0] != '#':
+            print "error: color complement compute"
+            return
         color_hex = int(color[1:], 16)
         comp_color = 0xFFFFFF ^ color_hex
         comp_color = "#%06X" % comp_color
