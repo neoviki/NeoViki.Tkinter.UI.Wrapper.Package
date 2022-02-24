@@ -3,25 +3,37 @@
 
     Author: Viki (a) Vignesh Natarajan
 '''
-#Prerequisite for Python Version 3
+
+#Prerequisite Python 3
 #sudo pip3 install tk
 
 try:
-    import os
     import tkinter as tk
-    import tkinter.ttk as ttk
-    from tkinter import filedialog
-    import tkinter.scrolledtext as scrolledtext
-    import threading
-    import tkFont
 except ImportError:
     import Tkinter as tk
-    import ttk
-    import tkFileDialog as filedialogs
-    import Tkinter.scrolledtext as scrolledtext
-    import tkFont
-    import threading
 
+try:
+    import tkinter.ttk as ttk
+except ImportError:
+    import ttk
+
+try:
+    from tkinter import filedialog
+except ImportError:
+    import tkFileDialog as filedialogs
+
+try:
+    import tkinter.scrolledtext as scrolledtext
+except ImportError:
+    import Tkinter.scrolledtext as scrolledtext
+
+try:
+    import tkFont as TkFont
+except ImportError:
+    import tkinter.font as TkFont
+
+import threading
+import os
 from PIL import ImageTk, Image
 from os import system
 from platform import system as platform
@@ -41,7 +53,7 @@ class color:
 
     def complement(self, color):
         if color[0] != '#':
-            print "error: color complement compute"
+            print("error: color complement compute")
             return
         color_hex = int(color[1:], 16)
         comp_color = 0xFFFFFF ^ color_hex
@@ -99,7 +111,7 @@ class UI_COMMON:
                 self.handle.destroy()
                 self.handle = None
             except:
-                print "error: object destroy"
+                print("error: object destroy")
 
     def generate_font_attribute(self):
         self.font_attribute = str(self.font.name) + " " + str(self.font.size)
@@ -480,7 +492,7 @@ class canvas(UI_COMMON):
         self.y = y
 
         if self.handle == None:
-            print "canvas handle is null"
+            print("canvas handle is null")
             return
 
         self.handle.configure(bg=self.color.bg)
