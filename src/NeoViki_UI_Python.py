@@ -141,6 +141,20 @@ class WINDOW(UI_COMMON):
         else:
             self.handle.resizable(False, False)
 
+    def update(self):
+        self.handle.update()
+
+    def refresh(self):
+        self.handle.update_idletasks()
+
+    #milliseconds interval
+    def after(self, interval, callback_function):
+        self.handle.after(interval, callback_function)
+
+    #milliseconds interval
+    def timer(self, interval, callback_function):
+        self.handle.after(interval, callback_function)
+
 class button(UI_COMMON):
     def __init__(self, parent):
         UI_COMMON.__init__(self)
@@ -439,6 +453,9 @@ def BEGIN():
     root = WINDOW()
     return root
 
+def TIMER(root, interval_ms, callback_function):
+    root.handle.after(interval_ms, callback_function)
+
 def END(root):
     root.handle.attributes('-topmost',True)
     root.handle.focus_set()
@@ -449,4 +466,5 @@ def END(root):
 
     root.handle.lift()
     root.handle.mainloop()
+
 
