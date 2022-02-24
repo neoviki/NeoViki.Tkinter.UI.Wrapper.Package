@@ -3,6 +3,8 @@
 
     Author: Viki (a) Vignesh Natarajan
 '''
+#Prerequisite for Python Version 3
+#sudo pip3 install tk
 
 try:
     import os
@@ -89,7 +91,7 @@ class UI_COMMON:
                 self.handle.delete(object.handle)
                 object.handle = None
             except:
-                print "error: object delete, try destroy instead"
+                print("error: object delete, try destroy instead")
 
     def destroy(self):
         if self.handle != None:

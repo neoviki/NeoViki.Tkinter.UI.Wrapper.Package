@@ -6,6 +6,11 @@
     - cd src/
     - NeoViki_UI_Tk.py
 
+## Prerequisite Python3
+ 
+    - sudo pip3 install tk
+
+
 ## Examples
 
 #### File Manager 1 ( examples/0001_filemanager/demo.png )
