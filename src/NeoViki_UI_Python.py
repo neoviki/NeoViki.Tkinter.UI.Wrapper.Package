@@ -23,6 +23,7 @@ except ImportError:
 from PIL import ImageTk, Image
 from os import system
 from platform import system as platform
+import math
 
 class font:
     def __init__(self):
@@ -341,6 +342,31 @@ class box:
         self.color = color()
         self.width = 10
         self.height = 10
+        self.vertices = []
+        self.vertices_prev = []
+
+    def rotate(self, angle_degrees):
+        new_vertices = []
+        angle = math.radians(angle_degrees)
+        cos_val = math.cos(angle)
+        sin_val = math.sin(angle)
+
+        #Center of Rotation
+        mid_x = self.x
+        mid_y = self.y
+
+        for x_old, y_old in self.vertices:
+            x_old -= mid_x
+            y_old -= mid_y
+            x_new = x_old * cos_val - y_old * sin_val
+            y_new = x_old * sin_val + y_old * cos_val
+            new_vertices.append([x_new + mid_x, y_new + mid_y])
+
+        self.vertices_prev = self.vertices
+        self.vertices = new_vertices
+        self.parent.handle.delete(self.handle)
+        self.handle = self.parent.handle.create_polygon(self.vertices, width=self.border.thickness,outline=self.border.color,
+                                                          fill=self.color.fg )
 
     def gotoxy(self, x, y):
         self.x = x
@@ -348,11 +374,24 @@ class box:
         w_mid = self.width/2
         h_mid = self.height/2
 
-        self.handle = self.parent.handle.create_rectangle(self.x - w_mid, self.y - h_mid,
-                                                          self.x + w_mid, self.y + h_mid,
-                                                          width=self.border.thickness,
-                                                          outline=self.border.color,
+
+        #self.handle = self.parent.handle.create_rectangle(self.x - w_mid, self.y - h_mid,
+        #                                                  self.x + w_mid, self.y + h_mid,
+        #                                                  width=self.border.thickness,
+        #                                                  outline=self.border.color,
+        #                                                  fill=self.color.fg )
+
+        self.vertices = [
+                            [ x - w_mid, y - h_mid],
+                            [ x + w_mid, y - h_mid],
+                            [ x + w_mid, y + h_mid],
+                            [ x - w_mid, y + h_mid]
+                        ]
+
+
+        self.handle = self.parent.handle.create_polygon(self.vertices, width=self.border.thickness,outline=self.border.color,
                                                           fill=self.color.fg )
+
 
 '''
 class line:
