@@ -8,7 +8,8 @@
 
 ## Prerequisite Python3
  
-    - sudo pip3 install tk
+    - python3 -m pip install tk
+    - python3 -m pip install pillow
 
 
 ## Examples
