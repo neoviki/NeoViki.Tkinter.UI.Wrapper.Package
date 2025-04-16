@@ -60,7 +60,7 @@ def main():
     b.gotoxy(100, 40)
 
     #obj.update(1)
-    #bj.vertical()
+    #obj.vertical()
 
     #obj.disable()
     #obj.enable()

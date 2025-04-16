@@ -1,7 +1,8 @@
 '''
-    Python UI Library based on Tkinter ( NeoViki_UI Format )
+    Python UI Wrapper based on Tkinter
 
-    Author: Viki (a) Vignesh Natarajan
+    Author  : Viki (a) V Natarajan
+    Contact : www.viki.design
 '''
 
 #Prerequisite Python 3

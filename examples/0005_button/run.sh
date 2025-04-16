@@ -1,2 +1,2 @@
-rm ../../src/NeoViki_UI_Tk.pyc 2>/dev/null
-python2 *.py
+rm ../../src/__pycache__ 2>/dev/null
+python3 *.py
