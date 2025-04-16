@@ -1,6 +1,6 @@
 #!/bin/bash
 for d in examples/* ; do
     cd $d
-    ./run_py3.sh
+    ./run.py2.sh
     cd ../../
 done
